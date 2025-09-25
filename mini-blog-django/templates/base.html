@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Mini Blog{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'core/styles.css' %}">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="container">
+      <a class="brand" href="/">Mini Blog</a>
+      <ul class="menu">
+        {% if user.is_authenticated %}
+          <li><a href="/admin/">Admin</a></li>
+          <li><a href="{% url 'create_post' %}">Nuevo Post</a></li>
+          <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
+        {% else %}
+          <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
+          <li><a href="{% url 'register' %}">Registrarse</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
