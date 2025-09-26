@@ -3,23 +3,33 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}Mini Blog{% endblock %}</title>
+  <title>{% block title %}Tienda{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'core/styles.css' %}">
 </head>
 <body>
   <nav class="navbar">
     <div class="container">
-      <a class="brand" href="/">Mini Blog</a>
       <ul class="menu">
         {% if user.is_authenticated %}
-          <li><a href="/admin/">Admin</a></li>
-          <li><a href="{% url 'create_post' %}">Nuevo Post</a></li>
+          {% if user.is_staff %}
+            <li><a href="{% url 'admin_dashboard' %}">Panel</a></li>
+            <li><a href="{% url 'create_product' %}">Nuevo Producto</a></li>
+          {% endif %}
           <li><a href="{% url 'logout' %}">Cerrar sesión</a></li>
         {% else %}
           <li><a href="{% url 'login' %}">Iniciar sesión</a></li>
-          <li><a href="{% url 'register' %}">Registrarse</a></li>
+          <div class="currency-selector">
+              <span>Moneda: </span>
+              <a href="{% url 'change_currency' 'COP' %}" 
+                class="{% if request.session.currency == 'COP' %}active{% endif %}">
+                  COP
+              </a>
+              <a href="{% url 'change_currency' 'USD' %}" 
+                class="{% if request.session.currency == 'USD' %}active{% endif %}">
+                  USD
+              </a>
+          </div>
         {% endif %}
-      </ul>
     </div>
   </nav>
 

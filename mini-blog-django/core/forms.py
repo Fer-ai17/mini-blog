@@ -1,11 +1,7 @@
 from django import forms
-from .models import Post
+from .models import Product
 
-class PostForm(forms.ModelForm):
+class ProductForm(forms.ModelForm):
     class Meta:
-        model = Post
-        fields = ["title", "content", "image"]
-        widgets = {
-            "title": forms.TextInput(attrs={"class": "form-control", "placeholder": "Título"}),
-            "content": forms.Textarea(attrs={"class": "form-control", "placeholder": "Escribe tu contenido aquí..."}),
-        }
+        model = Product
+        fields = ["name", "description", "price", "stock", "image", "label"]

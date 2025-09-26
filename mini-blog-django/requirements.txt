@@ -2,3 +2,5 @@ django
 mysqlclient
 gunicorn
 whitenoise
+babel
+

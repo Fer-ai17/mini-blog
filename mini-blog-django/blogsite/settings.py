@@ -3,7 +3,15 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "cambia-esto-por-uno-seguro"
+env_path = BASE_DIR / ".env"
+if env_path.exists():
+    with open(env_path) as f:
+        for line in f:
+            if line.strip() and not line.startswith("#"):
+                key, value = line.strip().split("=", 1)
+                os.environ[key] = value
+
+SECRET_KEY = "##12"
 DEBUG = True
 ALLOWED_HOSTS = ["*"]
 

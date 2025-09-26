@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Gestión de productos{% endblock %}
+
+{% block content %}
+<h2>Gestión de productos</h2>
+
+<p><a href="{% url 'create_product' %}" class="btn">➕ Añadir nuevo</a></p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Imagen</th>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Stock</th>
+      <th>Etiqueta</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+      <tr>
+        <td>
+          {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:60px; height:60px; object-fit:cover;">
+          {% else %}
+            -
+          {% endif %}
+        </td>
+        <td>{{ product.name }}</td>
+        <td>${{ product.price }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.get_label_display }}</td>
+        <td>
+          <a href="{% url 'edit_product' product.id %}">Editar</a> | 
+          <a href="{% url 'delete_product' product.id %}" onclick="return confirm('¿Seguro que deseas eliminar este producto?')">Eliminar</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">No hay productos aún.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<a href="{% url 'admin_dashboard' %}">← Volver al panel</a>
+{% endblock %}
